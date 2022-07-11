@@ -1,0 +1,79 @@
+from arte_guessing import logo
+from arte_guessing import won
+from random import randint
+total_attempts = 0
+
+
+# just show the initial screen /no return
+def starting():
+    print(logo)
+    print('I (the code) will choose a\n'
+           'number and you have to discover it!\n'
+           'According to Turing, YOU should be smarter than ME'
+           'LoL')
+
+
+#just get user level choice /return level
+def get_level():
+    level = int(input('Choose your level: \nHard:1\nMedium:2\nEasy:3 '))
+    return level
+
+
+# just generate a secret number  /return secret_number
+def generate_secret_number():
+    secret_number = randint(0, 100)
+    print(f'your secret is: {secret_number}')
+    return secret_number
+
+
+# apply the level to the user difficult in maximum attempts  / return maximum attempts
+def apply_level(level):
+    if level == 1:
+        maximum_attempts = 3
+        return maximum_attempts
+    elif level == 2:
+        maximum_attempts = 5
+        return maximum_attempts
+    elif level == 3:
+        maximum_attempts = 8
+        return maximum_attempts
+
+
+#just get user number guess  /return guess
+def get_guess():
+    guess = int(input('Guess my number'))
+    return guess
+
+
+# checking the user attempts / return bool for maximum_attempts >= total_attempts
+def checking_attempts(maximum_attempts, total_attempts):
+
+   return maximum_attempts >= total_attempts
+
+secret_number = generate_secret_number()
+def control_victory(total_attempts):
+    end_game = False
+    while end_game is False :
+        global secret_number
+        global level
+        guess = get_guess()
+        maximum_attempts = apply_level(level)
+        if guess == secret_number:
+            print(won)
+            end_game = True
+            break
+        elif maximum_attempts <= total_attempts:
+            print('loser, sucker.')
+            end_game = True
+            break
+        else:
+            if guess > secret_number:
+                print('tenta um numero menor')
+                total_attempts += 1
+                get_guess()
+            else:
+                print('tenta um numero maior')
+                get_guess()
+
+starting()
+control_victory(total_attempts)
